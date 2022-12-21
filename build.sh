@@ -7,7 +7,7 @@ mkdir -p bin
 
 function compile_c {
     # for files in src/**/*.c; do
-    for files in src/*.c src/**/*.c; do
+    for files in src/*.c src/**/*.c src/**/**/*.c; do
         objects="${objects} ${files}.o"
         clang $flags $files -ffreestanding -O3 -I./include/ -o $files.o
     done

@@ -1,5 +1,13 @@
 {
     "files.associations": {
-        "font.h": "c"
+        "font.h": "c",
+        "string.h": "c",
+        "gdt.h": "c",
+        "idt.h": "c",
+        "isr.h": "c",
+        "ports.h": "c",
+        "keyboard.h": "c",
+        "print.h": "c",
+        "cmos.h": "c"
     }
 }
