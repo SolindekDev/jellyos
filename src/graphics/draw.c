@@ -60,11 +60,22 @@ void draw_line(Vec2 start, Vec2 end, Color color) {
 }
 
 void draw_character(char c, int x, int y, Color fg, Color bg) {
-    int* font_char = &get_font()[c * 16];
+    // int* font_char = &get_font()[c * 16];
 
-    for (int i = 0; i < 16; ++i){
-        for (int j = 0; j < 8; ++j){
-            if (font_char[i] & (1 << (8 - j))){
+    // for (int i = 0; i < 16; ++i){
+    //     for (int j = 0; j < 8; ++j){
+    //         if (font_char[i] & (1 << (8 - j))){
+    //             framebuffer_put_pixel(vec2(x+j, y+i), fg);
+    //         } else {
+    //             framebuffer_put_pixel(vec2(x+j, y+i), bg);
+    //         }
+    //     }
+    // }
+    unsigned char* font_char = &get_font()[c * 16];
+
+    for(int i = 0; i < 16; ++i){
+        for(int j = 0; j < 8; ++j){
+            if(font_char[i] & (1 << (8 - j))){
                 framebuffer_put_pixel(vec2(x+j, y+i), fg);
             } else {
                 framebuffer_put_pixel(vec2(x+j, y+i), bg);

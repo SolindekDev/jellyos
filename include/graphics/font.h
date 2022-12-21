@@ -1,5 +1,5 @@
 #pragma once
 
-int* get_font();
+unsigned char* get_font();
 
 int get_font_length();
