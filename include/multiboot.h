@@ -241,6 +241,15 @@ struct multiboot_mmap_entry
 } __attribute__((packed));
 typedef struct multiboot_mmap_entry multiboot_memory_map_t;
 
+typedef struct {
+  unsigned int size;
+  unsigned int addr_low;
+  unsigned int addr_high;
+  unsigned int len_low;
+  unsigned int len_high;
+  unsigned int type;
+} multiboot_memory_map;
+
 struct multiboot_mod_list
 {
   /* the memory used goes from bytes ’mod_start’ to ’mod_end-1’ inclusive */

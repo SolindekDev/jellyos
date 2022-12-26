@@ -4,7 +4,7 @@
 #define CMOS_DATA    0x71
 
 #define RTC_REGISTER_SECOND  0x00
-#define RTC_REGISTER_MINUT   0x02
+#define RTC_REGISTER_MINUTE   0x02
 #define RTC_REGISTER_HOUR    0x04
 #define RTC_REGISTER_DAY     0x07
 #define RTC_REGISTER_MONTH   0x08
@@ -18,7 +18,7 @@
 
 typedef struct Date_t {
     int second;
-    int minut;
+    int minute;
     int hour;
     int day;
     int month;

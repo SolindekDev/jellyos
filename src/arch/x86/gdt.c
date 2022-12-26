@@ -1,5 +1,7 @@
 #include <arch/x86/gdt.h>
 
+#include <drivers/serial_port.h>
+
 GDT g_gdt[NO_GDT_DESCRIPTORS];
 GDT_PTR g_gdt_ptr;
 
@@ -20,6 +22,8 @@ void set_entry_gdt(int index, unsigned int base, unsigned int limit, unsigned ch
 }
 
 void init_gdt() {
+    serial_printf("[\x1b[1;33mGDT\x1b[0;0m] Initializing global descriptor table\n");
+    
     g_gdt_ptr.limit = sizeof(g_gdt) - 1;
     g_gdt_ptr.base_address = (unsigned int)g_gdt;
 

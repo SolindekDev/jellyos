@@ -2,6 +2,8 @@
 #include <arch/x86/isr.h>
 #include <arch/x86/idt.h>
 
+#include <drivers/serial_port.h>
+
 #include <core/print.h>
 
 ISR g_interrupt_handlers[NO_INTERRUPT_HANDLERS];
@@ -68,8 +70,9 @@ static void print_registers(registers_t *reg) {
 }
 
 void isr_exception_handler(registers_t reg) {
+   serial_printf("[\x1b[1;33mISR\x1b[0;0m] Interrupt has been got with number 0x%x\n", reg.int_no);
    if (reg.int_no < 32) {
-      printf("ISR ERROR: %s\n", exception_messages[reg.int_no]);
+      printf("ISR ERROR 0x%x: %s\n", reg.int_no, exception_messages[reg.int_no]);
       print_registers(&reg);
       printf("HALTING THE SYSTEM UP, TO WORK ON RESET THE SYSTEM");
       for (;;) 

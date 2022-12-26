@@ -3,6 +3,9 @@
 #include <core/sprintf.h>
 #include <core/string.h>
 
+#include <mem/mem.h>
+#include <drivers/serial_port.h>
+
 #include <graphics/draw.h>
 #include <graphics/framebuffer.h>
 
@@ -13,6 +16,15 @@ Vec2 internal_print_vec;
 
 Color internal_print_fg;
 Color internal_print_bg;
+
+void set_print_fg(Color new_color) {
+    internal_print_fg = new_color;
+}
+
+void set_print_bg(Color new_color) {
+    internal_print_bg = new_color;
+}
+
 
 void insert_tab() {
     for (int i = 0; i < 4; i++) putc(' ');
@@ -83,6 +95,7 @@ void printf(char* format, ...) {
                     
                     for (int i = 0; bufprint[i] != '\0'; i++)
                         putc(bufprint[i]);
+                    memset((unsigned char*)bufprint, 0, 1024);
                     break;
                 case 'c': case 'C':
                     format_char = va_arg(arg, int);
@@ -90,6 +103,12 @@ void printf(char* format, ...) {
                     break;
                 case 's': case 'S':
                     format_str = va_arg(arg, char*);
+                    for (int i2 = 0; i2 < strlen(format_str); i2++) 
+                        putc(format_str[i2]);
+                    break;
+                case 'f': case 'F':
+                    format_double = va_arg(arg, double);
+                    dtoa(bufprint, format_double);
                     for (int i2 = 0; i2 < strlen(format_str); i2++) 
                         putc(format_str[i2]);
                     break;
@@ -104,6 +123,7 @@ void printf(char* format, ...) {
 }
 
 void init_print() {
+    serial_printf("[\x1b[1;33mPrint\x1b[0;0m] Initializing printing on screen\n");
     internal_print_vec = vec2(5, 5);
     internal_print_bg  = color(0, 0, 0);
     internal_print_fg  = color(255, 255, 255);

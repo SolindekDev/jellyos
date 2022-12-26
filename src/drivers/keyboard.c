@@ -1,6 +1,7 @@
 #include <drivers/keyboard.h>
 
 #include <core/print.h>
+#include <drivers/serial_port.h>
 
 #include <arch/x86/ports.h>
 #include <arch/x86/isr.h>
@@ -86,6 +87,7 @@ void keyboard_handler(registers_t* reg) {
 }
 
 void init_keyboard_driver() {
+    serial_printf("[\x1b[1;33mKeyboard\x1b[0;0m] Initializing keyboard drivers\n");
     key_char = 0;
     keycode = 0;
     shift = 0;

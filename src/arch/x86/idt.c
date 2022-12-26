@@ -2,6 +2,8 @@
 #include <arch/x86/isr.h>
 #include <arch/x86/pic8259.h>
 
+#include <drivers/serial_port.h>
+
 IDT g_idt[NO_IDT_DESCRIPTORS];
 IDT_PTR g_idt_ptr;
 
@@ -16,6 +18,8 @@ void set_entry_idt(int index, unsigned int base, unsigned short seg_sel, unsigne
 }
 
 void init_idt() {
+    serial_printf("[\x1b[1;33mIDT\x1b[0;0m] Initializing interrupt descriptor table\n");
+
     g_idt_ptr.base_address = (unsigned int)g_idt;
     g_idt_ptr.limit = sizeof(g_idt) - 1;
     pic8259_init();

@@ -1,5 +1,8 @@
 #include <core/sprintf.h>
 #include <core/string.h>
+#include <core/convert.h>
+
+#include <mem/mem.h>
 
 #include <stdarg.h>
 
@@ -39,6 +42,7 @@ void sprintf(char* buf, char* format, ...) {
                     
                     for (int i = 0; bufprint[i] != '\0'; i++)
                         append_str(buf, bufprint[i]);
+                    memset((unsigned char*)bufprint, 0, 1024);
                     break;
                 // case 'f': case 'F':
                 //     format_float = va_arg(list, double);
@@ -51,6 +55,12 @@ void sprintf(char* buf, char* format, ...) {
                     break;
                 case 's': case 'S':
                     format_str = va_arg(arg, char*);
+                    for (int i2 = 0; i2 < strlen(format_str); i2++) 
+                        append_str(buf, format_str[i2]);
+                    break;
+                case 'f': case 'F':
+                    format_float = va_arg(arg, double);
+                    dtoa(bufprint, format_float);
                     for (int i2 = 0; i2 < strlen(format_str); i2++) 
                         append_str(buf, format_str[i2]);
                     break;

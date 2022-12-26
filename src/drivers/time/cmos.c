@@ -1,7 +1,7 @@
 #include <drivers/time/cmos.h>
 
 #include <core/sprintf.h>
-#include <utils/mem.h>
+#include <mem/mem.h>
 
 #include <arch/x86/ports.h>
 
@@ -23,7 +23,7 @@ char* get_date_pretty() {
         "%s%d:%s%d:%s%d %d%d:%s%d:%s%d\n", 
         // Time
         date.hour <= 9 ? "0" : "", date.hour, 
-        date.minut <= 9 ? "0" : "", date.minut, 
+        date.minute <= 9 ? "0" : "", date.minute, 
         date.second <= 9 ? "0" : "", date.second, 
 
         // Date
@@ -39,7 +39,7 @@ Date_t get_date_cmos() {
     Date_t date;
     while (get_update_in_progress_flag());
     date.second  = get_rtc_register(RTC_REGISTER_SECOND);
-    date.minut   = get_rtc_register(RTC_REGISTER_MINUT);
+    date.minute  = get_rtc_register(RTC_REGISTER_MINUTE);
     date.hour    = get_rtc_register(RTC_REGISTER_HOUR);
     date.day     = get_rtc_register(RTC_REGISTER_DAY);
     date.month   = get_rtc_register(RTC_REGISTER_MONTH);
@@ -49,7 +49,7 @@ Date_t get_date_cmos() {
     unsigned char register_b = get_rtc_register(RTC_REGISTER_B);
     if  (!(register_b & 0x04)) {
         date.second = (date.second & 0x0F) + ((date.second / 16) * 10);
-        date.minut = (date.minut & 0x0F) + ((date.minut / 16) * 10);
+        date.minute = (date.minute & 0x0F) + ((date.minute / 16) * 10);
         date.hour = ( (date.hour & 0x0F) + (((date.hour & 0x70) / 16) * 10) ) | (date.hour & 0x80);
         date.day = (date.day & 0x0F) + ((date.day / 16) * 10);
         date.month = (date.month & 0x0F) + ((date.month / 16) * 10);

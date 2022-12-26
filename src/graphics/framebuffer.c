@@ -1,11 +1,16 @@
 #include <graphics/framebuffer.h>
+
 #include <utils/colors.h>
 #include <utils/vec.h>
+
 #include <multiboot.h>
+
+#include <drivers/serial_port.h>
 
 unsigned long global_addr;
 
 void init_framebuffer(unsigned long addr) {
+    serial_printf("[\x1b[1;33mFramebuffer\x1b[0;0m] Initializing framebuffer\n");
     global_addr = addr;
 }
 

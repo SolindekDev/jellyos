@@ -32,10 +32,16 @@ function create_iso {
     grub-mkrescue -o JellyOS.iso  isodir
 }
 
+function set_up_filesystem {
+    dd if=/dev/zero of=./disk.ext2 bs=512 count=20480
+    /sbin/mkfs.ext2 ./disk.ext2
+}
+
 compile_c
 compile_asm
 # echo $objects
 link_files
 create_iso
+# set_up_filesystem
 
-qemu-system-x86_64 -cdrom JellyOS.iso -m 2G -monitor stdio -vga vmware
+qemu-system-x86_64 -cdrom JellyOS.iso -m 3G -vga vmware -serial stdio  -drive file=disk.ext2,format=raw
